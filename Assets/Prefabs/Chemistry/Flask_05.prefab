@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23474440012120782}
   - component: {fileID: 64782628697813030}
   - component: {fileID: 54691729665003800}
+  - component: {fileID: 114067370522788362}
   m_Layer: 0
   m_Name: Flask_05
   m_TagString: Equipment
@@ -110,6 +111,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114067370522788362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822811081740728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d61fa0e3f8edbcc4d81a333f4aead4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1962619192699980
 GameObject:
   m_ObjectHideFlags: 0

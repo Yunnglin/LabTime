@@ -15,7 +15,6 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] GameObject player;
     [SerializeField] Vector3 offset; //距离玩家的位移
-    [SerializeField] float maxDetectDistance = 2f;
 
     //镜头旋转
     [SerializeField] private float m_sensitivityX = 3f;
@@ -61,66 +60,68 @@ public class CameraController : MonoBehaviour
         CameraRotate();
         //CameraFOV();
         FollowPlayer();
-        DetectEquipent("Plane", "Equipment");
+        //DetectEquipent("Plane", "Equipment");
     }
 
+    #region 检测碰撞,并拖拽
     /// <summary>
     /// 检测碰撞,并拖拽
     /// </summary>
-    private void DetectEquipent(string planeTag, string targetTag)
-    {
-        //屏幕中间发射射线
-        //Vector3 targetPos = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
-        //鼠标位置发射射线
-        Vector3 targetPos = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(targetPos);
-        RaycastHit hitInfo;
+    //private void DetectEquipent(string planeTag, string targetTag)
+    //{
+    //    //屏幕中间发射射线
+    //    //Vector3 targetPos = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
+    //    //鼠标位置发射射线
+    //    Vector3 targetPos = Input.mousePosition;
+    //    Ray ray = Camera.main.ScreenPointToRay(targetPos);
+    //    RaycastHit hitInfo;
 
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
-        //目前没有拾起物品
-        if (pickGameObj == null)
-        {
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                if (hitInfo.collider.gameObject.CompareTag(targetTag))
-                {
-                    Debug.Log("碰撞成功" + hitInfo.collider.name);
-                    //切换鼠标样式
-                    //Cursor.SetCursor(cursorTextureHand, hotSpot, cursorMode);
+    //    Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+    //    //目前没有拾起物品
+    //    if (pickGameObj == null)
+    //    {
+    //        if (Physics.Raycast(ray, out hitInfo))
+    //        {
+    //            if (hitInfo.collider.gameObject.CompareTag(targetTag))
+    //            {
+    //                Debug.Log("碰撞成功" + hitInfo.collider.name);
+    //                //切换鼠标样式
+    //                //Cursor.SetCursor(cursorTextureHand, hotSpot, cursorMode);
 
-                    if (Input.GetMouseButton(0))
-                    {
-                        //存储被抓取的对象
-                        pickGameObj = hitInfo.collider.gameObject;
-                    }
-                }
-            }
-        }
+    //                if (Input.GetMouseButton(0))
+    //                {
+    //                    //存储被抓取的对象
+    //                    pickGameObj = hitInfo.collider.gameObject;
+    //                }
+    //            }
+    //        }
+    //    }
         
-        //如果有拾取的物体，并且鼠标与地面碰撞，则使物体移动
-        if (pickGameObj != null)
-        {
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                if (hitInfo.collider.gameObject.CompareTag(planeTag))
-                {
-                    pickGameObj.GetComponent<Rigidbody>().freezeRotation = true;
-                    pickGameObj.transform.position = new Vector3(
-                        hitInfo.point.x,
-                        hitInfo.point.y,
-                        hitInfo.point.z + pickGameObj.GetComponent<Collider>().bounds.size.y / 2);
-                }
+    //    //如果有拾取的物体，并且鼠标与地面碰撞，则使物体移动
+    //    if (pickGameObj != null)
+    //    {
+    //        if (Physics.Raycast(ray, out hitInfo))
+    //        {
+    //            if (hitInfo.collider.gameObject.CompareTag(planeTag))
+    //            {
+    //                pickGameObj.GetComponent<Rigidbody>().freezeRotation = true;
+    //                pickGameObj.transform.position = new Vector3(
+    //                    hitInfo.point.x,
+    //                    hitInfo.point.y,
+    //                    hitInfo.point.z + pickGameObj.GetComponent<Collider>().bounds.size.y / 2);
+    //            }
                 
-                Debug.Log("第二次发射" + hitInfo.collider.name);
-            }
-        }
-        //释放物体
-        if (Input.GetMouseButtonUp(0))
-        {
-            pickGameObj.GetComponent<Rigidbody>().freezeRotation = false;
-            pickGameObj = null;
-        }
-    }
+    //            Debug.Log("第二次发射" + hitInfo.collider.name);
+    //        }
+    //    }
+    //    //释放物体
+    //    if (Input.GetMouseButtonUp(0))
+    //    {
+    //        pickGameObj.GetComponent<Rigidbody>().freezeRotation = false;
+    //        pickGameObj = null;
+    //    }
+    //}
+    #endregion
 
     /// <summary>
     /// 跟随玩家
