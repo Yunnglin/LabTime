@@ -30,28 +30,31 @@ public class DragObject : MonoBehaviour
     {
         if (mIsControl)
         {
+            RotateBind(rotateX, Vector3.right);
+            RotateBind(rotateY, Vector3.up);
+            RotateBind(rotateZ, Vector3.left);
+        }
+    }
 
-            if (Input.GetKeyDown(rotateX) || Input.GetKeyDown(rotateY) || Input.GetKeyDown(rotateZ))
-            {
-                SetControlState(true, false);
-            }
+    /// <summary>
+    /// 绑定按键与旋转轴
+    /// </summary>
+    /// <param name="key">按键</param>
+    /// <param name="axis">对应轴</param>
+    private void RotateBind(KeyCode key,Vector3 axis)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            SetControlState(true, false);
+        }
 
-            if (Input.GetKey(rotateX))
-            {
-                transform.Rotate(Vector3.right, rotateSpeed, Space.World);
-            }
-            else if (Input.GetKey(rotateY))
-            {
-                transform.Rotate(Vector3.up, rotateSpeed, Space.World);
-            }
-            else if (Input.GetKey(rotateZ))
-            {
-                transform.Rotate(Vector3.left, rotateSpeed, Space.World);
-            }
-            if (Input.GetKeyUp(rotateX) || Input.GetKeyUp(rotateY) || Input.GetKeyUp(rotateZ))
-            {
-                SetControlState(true, true);
-            }
+        if (Input.GetKey(key))
+        {
+            transform.Rotate(axis, rotateSpeed, Space.World);
+        }
+        if (Input.GetKeyUp(key))
+        {
+            SetControlState(true, true);
         }
     }
 
